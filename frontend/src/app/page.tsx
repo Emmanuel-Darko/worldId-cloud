@@ -1,61 +1,36 @@
 "use client";
 
-import { VerificationLevel, IDKitWidget, useIDKit } from "@worldcoin/idkit";
-import type { ISuccessResult } from "@worldcoin/idkit";
-import { verify } from "./actions/verify";
+import { useContract } from "@/context/ContractContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Home() {
-  const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
-  const action = process.env.NEXT_PUBLIC_WLD_ACTION;
+export default function HomePage() {
+  const router = useRouter();
+  const { account, connectWallet, setShowModal, registerMerchant } = useContract();
 
-  if (!app_id) {
-    throw new Error("app_id is not set in environment variables!");
-  }
-  if (!action) {
-    throw new Error("action is not set in environment variables!");
-  }
-
-  const { setOpen } = useIDKit();
-
-  const onSuccess = (result: ISuccessResult) => {
-    // This is where you should perform frontend actions once a user has been verified, such as redirecting to a new page
-    window.alert(
-      "Successfully verified with World ID! Your nullifier hash is: " +
-        result.nullifier_hash
-    );
-  };
-
-  const handleProof = async (result: ISuccessResult) => {
-    console.log(
-      "Proof received from IDKit, sending to backend:\n",
-      JSON.stringify(result)
-    ); // Log the proof from IDKit to the console for visibility
-    const data = await verify(result);
-    if (data.success) {
-      console.log("Successful response from backend:\n", JSON.stringify(data)); // Log the response from our backend for visibility
-    } else {
-      throw new Error(`Verification failed: ${data.detail}`);
+  useEffect(() => {
+    if (account) {
+      router.push("/shop");
     }
-  };
+  }, [account]);
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center align-middle h-screen">
-        <p className="text-2xl mb-5">World ID Cloud Template</p>
-        <IDKitWidget
-          action={action}
-          app_id={app_id}
-          onSuccess={onSuccess}
-          // handleVerify={handleProof}
-          verification_level={VerificationLevel.Orb} // Change this to VerificationLevel.Device to accept Orb- and Device-verified users
-        />
-        <button
-          className="border border-black rounded-md"
-          onClick={() => setOpen(true)}
-        >
-          <div className="mx-3 my-1">Verify with World ID</div>
-        </button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 to-blue-400">
+      <div className="text-center p-8 bg-white bg-opacity-80 rounded-xl shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Welcome to KodeShop</h1>
+        <p className="text-lg text-gray-600 mb-6">Please connect your wallet to get started</p>
+        {!account ? (
+          <button
+            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-lg text-xl shadow-xl hover:scale-105 transition transform"
+            onClick={connectWallet}
+          >
+            Connect Wallet
+          </button>
+        ) : (
+          <div className="text-lg text-gray-800">Wallet Connected: {account}</div>
+        )}
       </div>
     </div>
   );
 }
+

@@ -1,34 +1,94 @@
-# World ID Next.js Template
+# KodeShop: A Decentralized Marketplace
 
-This is a template repository for creating a new project using Next.js, TailwindCSS, and the [World ID SDK](https://id.worldcoin.org). This template isn't intended for use cases that require on-chain verification, but rather for use cases that leverage off-chain web backend verification.
+KodeShop is a decentralized marketplace where merchants can list products, manage inventory, and interact directly with users. It leverages blockchain technology for security, transparency, and eliminating intermediary fees. The platform also incorporates World ID verification for enhanced user authentication.
 
-## Getting Started
+## Features
 
-First, set the correct Node.js version using `nvm` and run the development server:
+- **Merchant Registration**: Allows merchants to register and list products.
+- **Product Listing**: Merchants can add, update, or remove products.
+- **User Interaction**: Users can browse and purchase items directly from merchants.
+- **World ID Verification**: World ID is integrated for secure user authentication and validation.
 
-```bash
-nvm use 20
-pnpm i && pnpm dev
-```
+## Project Structure
 
-Copy `.env.example` to `.env.local` and add your World ID App ID and Action Name to the appropriate variables.
+The project consists of two main parts:
+1. **Blockchain (Smart Contracts)**: Handles all the backend operations using Ethereum and Solidity.
+2. **Frontend**: A React-based interface for users and merchants to interact with the blockchain.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Blockchain Directory
 
-This template includes a server action to verify the proof returned by the IDKit widget at `src/app/actions/verify.ts`. Edit this file to handle any backend functions you need to perform after the proof has been verified.
+This directory contains the smart contract for the KodeShop decentralized marketplace.
 
-You can start editing the client-side page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file. Edit the `onSuccess` function to define frontend behavior once the proof has been verified.
+#### Steps to Run Blockchain Directory
 
-## Learn More
+1. **Install Dependencies**  
+   First, navigate to the `blockchain` directory and install the required dependencies.
 
-To learn more about Next.js and World ID, take a look at the following resources:
+   ```bash
+   cd blockchain
+   npm install
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
--   [World ID Documentation](https://docs.worldcoin.org/) - learn about World ID features and API.
+2. **Set Up Environment Variables**
+Create a .env file and add the following environment variables:
 
-## Deploy on Vercel
+    ```bash
+    makefile
+    Copy code
+    INFURA_PROJECT_ID=<Your Infura Project ID>
+    PRIVATE_KEY=<Your Wallet Private Key>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Deploy Smart Contracts
+Deploy the smart contracts to your desired network (e.g., Sepolia, Unichain). Use Hardhat to deploy:
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+bash
+Copy code
+npx hardhat run scripts/deploy.js --network sepolia
+Verify Contracts
+After deployment, you can verify the contract:
+
+bash
+Copy code
+npx hardhat verify --network sepolia <Contract_Address>
+Frontend Directory
+This directory contains the frontend for KodeShop, built with React.
+
+Steps to Run Frontend Directory
+Install Dependencies
+Navigate to the frontend directory and install the required dependencies.
+
+bash
+Copy code
+cd frontend
+npm install
+Connect to Blockchain
+Ensure that the blockchain network is up and running. The frontend connects to it using Web3.js to interact with the deployed smart contract.
+
+Run the Development Server
+Run the frontend development server:
+
+bash
+Copy code
+npm run dev
+This will start the application at http://localhost:3000.
+
+Wallet Connection
+The frontend allows users to connect their wallet (e.g., MetaMask) to interact with the blockchain. Ensure that users are connected to the correct network (e.g., Sepolia or Unichain).
+
+World ID Verification
+World ID is integrated into the frontend for user authentication. Before adding products or interacting with the marketplace, users must verify their identity via World ID.
+
+World ID Verification Integration
+World ID provides secure and decentralized verification for users. This feature is used to ensure that the users interacting with the marketplace are legitimate, avoiding fraudulent activities.
+
+User Verification: Upon connecting their wallet, users are required to pass through World ID verification. This ensures that only verified users can participate in actions like purchasing or adding products.
+
+Verification Flow:
+
+The user connects their wallet (MetaMask).
+The user verifies their identity using World ID.
+Once verified, the user can interact with the platform (e.g., add products, make purchases).
+Contribution
+If you wish to contribute to this project, please fork the repository and submit a pull request with your proposed changes.
+
+License
+This project is open-source and licensed under the MIT License.

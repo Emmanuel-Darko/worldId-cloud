@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useContract } from '@/context/ContractContext';
 
 interface AddItemModalProps {
   showModal: boolean;
@@ -6,20 +7,30 @@ interface AddItemModalProps {
   onAddItem: (item: { name: string; image: string; price: number; description: string }) => void;
 }
 
-export default function AddItemModal({ showModal, setShowModal, onAddItem }: AddItemModalProps) {
+export default function AddItemModal() {
   const [itemName, setItemName] = useState("");
   const [imageLink, setImageLink] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  
+  const { addProduct, showModal, setShowModal } = useContract();
 
   const handleAdd = () => {
     if (itemName.trim() && imageLink.trim() && price.trim() && description.trim()) {
-      onAddItem({
+      const product = {
         name: itemName,
-        image: imageLink,
-        price: parseFloat(price),
         description,
-      });
+        price: parseFloat(price),
+        quantity: 1,
+        image: [imageLink]
+      };
+      addProduct(
+        product.name,
+        product.description,
+        product.price,
+        product.quantity,
+        product.image
+      );
       setItemName("");
       setImageLink("");
       setPrice("");
@@ -27,6 +38,7 @@ export default function AddItemModal({ showModal, setShowModal, onAddItem }: Add
       setShowModal(false);
     }
   };
+
 
   return (
     <>
