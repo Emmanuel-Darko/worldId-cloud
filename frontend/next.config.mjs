@@ -6,6 +6,9 @@ const nextConfig = {
     config.externals.push("pino-pretty");
     return config;
   },
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
