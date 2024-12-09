@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { Fragment } from "react";
 import AddressBox from "@/components/ui/AddressBox";
