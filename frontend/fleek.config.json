@@ -1,7 +1,7 @@
 {
   "sites": [
     {
-      "slug": "wide-morning-purring",
+      "slug": "microscopic-pager-wailing",
       "distDir": "out",
       "buildCommand": "npm run build"
     }
