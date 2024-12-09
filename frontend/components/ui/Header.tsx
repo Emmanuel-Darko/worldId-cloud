@@ -1,13 +1,13 @@
 "use client"
 import { VerificationLevel, IDKitWidget, useIDKit } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
-import { verify } from "../app/actions/verify";
 import ConnectedAccount from "./ConnectedAccount";
 
 import { useContract } from '@/context/ContractContext';
+import { useAppContext } from "@/utils/context";
 
 export default function Header({ children, address }: any) {
-    const { account, connectWallet, setShowModal, registerMerchant } = useContract();
+    const { posting, account, connectWallet, setShowModal, registerMerchant } = useAppContext();
 
     const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
     const action = process.env.NEXT_PUBLIC_WLD_ACTION;
@@ -21,24 +21,13 @@ export default function Header({ children, address }: any) {
 
     const { setOpen } = useIDKit();
 
-    const onSuccess = (result: ISuccessResult) => {
+    const onSuccess = async(result: any) => {
         // This is where you should perform frontend actions once a user has been verified, such as redirecting to a new page
         // if (window.confirm("Successfully verified with World ID! PROCEED TO ADD ITEM")) {
             // }
-        registerMerchant();
-        setShowModal(true);
-    };
-    
-    const handleProof = async (result: ISuccessResult) => {
-        console.log(
-          "Proof received from IDKit, sending to backend:\n",
-          JSON.stringify(result)
-        ); // Log the proof from IDKit to the console for visibility
-        const data = await verify(result);
-        if (data.success) {
-          console.log("Successful response from backend:\n", JSON.stringify(data)); // Log the response from our backend for visibility
-        } else {
-          throw new Error(`Verification failed: ${data.detail}`);
+        const success = await registerMerchant()
+        if (success) {
+            setShowModal(true);
         }
     };
 
@@ -59,9 +48,14 @@ export default function Header({ children, address }: any) {
                         <ConnectedAccount address={account} />
                         <button
                             className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:scale-105 transition transform"
-                            onClick={() => setOpen(true)}
+                            onClick={() => onSuccess(true)}
+                            disabled={posting}
                         >
-                            Post Item
+                            {
+                                posting ?
+                                <span className="ml-2 loader"></span> :
+                                "Post Item"
+                            }
                         </button>
                     </>
                 )}

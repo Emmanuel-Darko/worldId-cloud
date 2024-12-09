@@ -2,13 +2,14 @@
 
 import { Metadata } from "next";
 import { useState, useEffect } from "react";
-import Header from "@/components/Header";
-import ShopCard from "@/components/ShopCard";
-import AddressBox from "@/components/AddressBox";
-import AddItemModal from "@/components/AddItemModal";
+import Header from "@/components/ui/Header";
+import ShopCard from "@/components/ui/ShopCard";
+import AddressBox from "@/components/ui/AddressBox";
+import AddItemModal from "@/components/ui/AddItemModal";
 
 import { useContract } from '@/context/ContractContext';
-import Loader from "@/components/Loader";
+import { useAppContext } from "@/utils/context";
+import Loader from "@/components/ui/Loader";
 
 const metadata: Metadata = {
   title: "Shop | Shop Page",
@@ -38,18 +39,18 @@ export default function Shop() {
         },
     ])
 
-    const { loading, getAllProducts, addProduct, account } = useContract();
+    const { loading, getAllProducts, addProduct, account } = useAppContext();
     const [products, setProducts] = useState<any[]>([]);
 
     useEffect(() => {
-        if (account) {
+        // if (account) {
           const fetchProducts = async () => {
             const products = await getAllProducts();
             setProducts(products);
           };
           fetchProducts();
-        }
-      }, [getAllProducts, account]);
+        // }
+      }, [getAllProducts]);
 
     const handleAddProduct = () => {
         addProduct("Laptop", "High-performance laptop", "1", 10, ["image1.png", "image2.png"]);

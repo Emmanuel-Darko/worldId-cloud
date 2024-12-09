@@ -1,12 +1,13 @@
 "use client";
 
 import { useContract } from "../context/ContractContext";
+import { useAppContext } from "@/utils/context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function HomePage() {
   const router = useRouter();
-  const { account, connectWallet, setShowModal, registerMerchant } = useContract() || {};  // Default to an empty object if null
+  const { account, connectWallet, setShowModal, registerMerchant } = useAppContext() || {};  // Default to an empty object if null
 
   useEffect(() => {
     if (account) {

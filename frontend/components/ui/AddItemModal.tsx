@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useContract } from '@/context/ContractContext';
+import { useAppContext } from "@/utils/context";
 
 interface AddItemModalProps {
   showModal: boolean;
@@ -13,7 +14,7 @@ export default function AddItemModal() {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   
-  const { addProduct, showModal, setShowModal } = useContract();
+  const { addProduct, showModal, setShowModal } = useAppContext();
 
   const handleAdd = () => {
     if (itemName.trim() && imageLink.trim() && price.trim() && description.trim()) {
