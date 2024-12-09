@@ -6,7 +6,6 @@ import Header from "@/components/ui/Header";
 import ShopCard from "@/components/ui/ShopCard";
 import AddItemModal from "@/components/ui/AddItemModal";
 
-import { useContract } from '@/context/ContractContext';
 import { useAppContext } from "@/utils/context";
 import Loader from "@/components/ui/Loader";
 

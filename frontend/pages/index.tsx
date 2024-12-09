@@ -1,6 +1,5 @@
 "use client";
 
-import { useContract } from "../context/ContractContext";
 import { useAppContext } from "@/utils/context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

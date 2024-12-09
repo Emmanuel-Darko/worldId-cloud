@@ -3,7 +3,6 @@ import { VerificationLevel, IDKitWidget, useIDKit } from "@worldcoin/idkit";
 import type { ISuccessResult } from "@worldcoin/idkit";
 import ConnectedAccount from "./ConnectedAccount";
 
-import { useContract } from '@/context/ContractContext';
 import { useAppContext } from "@/utils/context";
 
 import { useRouter } from "next/navigation";

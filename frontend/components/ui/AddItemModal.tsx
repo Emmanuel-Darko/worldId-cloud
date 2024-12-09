@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useContract } from '@/context/ContractContext';
 import { useAppContext } from "@/utils/context";
 
 interface AddItemModalProps {
