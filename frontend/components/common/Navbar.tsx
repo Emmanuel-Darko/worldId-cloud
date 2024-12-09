@@ -22,8 +22,8 @@ const Navbar = () => {
 
   const links = [
     {
-      name: "My dashboard",
-      href: "/",
+      name: "Invoices",
+      href: "/invoices",
     },
     {
       name: "Create an Invoice",
@@ -59,19 +59,8 @@ const Navbar = () => {
   }, [account.isConnected, disconnectWalletFromCipherProvider]);
 
   return (
-    <nav className="relative h-full flex items-center p-[20px] gap-[20px] xl:gap-[60px] bg-white shadow-small mb-[30px] tablet:mb-[80px]">
-      <a
-        target="_blank"
-        rel="noreferrer noopener"
-        href="https://request.network/"
-        className="mr-auto tablet:mr-0"
-      >
-        <img
-          src="assets/logo.svg"
-          alt="Request Network Logo"
-          className="w-[100px] xl:w-[120px]"
-        />
-      </a>
+    <nav className="relative h-full flex items-center p-[20px] gap-[20px] xl:gap-[60px] bg-gradient-to-r from-purple-400 to-slate-100 rounded-lg shadow-lg mb-[30px] tablet:mb-[80px]">
+      <Link href={"/shop"} className="text-2xl font-bold text-black mb-4 md:mb-0">KodeShop</Link>
       <BurgerMenu
         className="block tablet:hidden"
         onClick={() => setIsMobileMenuOpen(true)}
@@ -83,7 +72,7 @@ const Navbar = () => {
             <div
               className={`${
                 router.pathname === link.href &&
-                "h-[4px] bg-green w-full absolute bottom-[-28px]"
+                "h-[4px] bg-purple-900 w-full absolute bottom-[-28px]"
               }`}
             ></div>
           </li>

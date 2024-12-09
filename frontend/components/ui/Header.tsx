@@ -6,6 +6,8 @@ import ConnectedAccount from "./ConnectedAccount";
 import { useContract } from '@/context/ContractContext';
 import { useAppContext } from "@/utils/context";
 
+import { useRouter } from "next/navigation";
+
 export default function Header({ children, address }: any) {
     const { posting, account, connectWallet, setShowModal, registerMerchant } = useAppContext();
 
@@ -31,6 +33,11 @@ export default function Header({ children, address }: any) {
         }
     };
 
+    const Router = useRouter();
+    const pushToInvoices = () => {
+        Router.push("/invoices");
+    };
+
 
     return (
         <div>
@@ -46,17 +53,22 @@ export default function Header({ children, address }: any) {
                 ) : (
                     <>
                         <ConnectedAccount address={account} />
-                        <button
-                            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:scale-105 transition transform"
-                            onClick={() => onSuccess(true)}
-                            disabled={posting}
-                        >
-                            {
-                                posting ?
-                                <span className="ml-2 loader"></span> :
-                                "Post Item"
-                            }
-                        </button>
+                        <span>
+                            <a href="#" onClick={pushToInvoices} className="mr-4 underline font-bold text-lg">
+                                📜 Invoices
+                            </a>
+                            <button
+                                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-lg hover:scale-105 transition transform"
+                                onClick={() => onSuccess(true)}
+                                disabled={posting}
+                            >
+                                {
+                                    posting ?
+                                    <span className="ml-2 loader"></span> :
+                                    "Post Item"
+                                }
+                            </button>
+                        </span>
                     </>
                 )}
             </div>

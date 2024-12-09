@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { useState, useEffect } from "react";
 import Header from "@/components/ui/Header";
 import ShopCard from "@/components/ui/ShopCard";
-import AddressBox from "@/components/ui/AddressBox";
 import AddItemModal from "@/components/ui/AddItemModal";
 
 import { useContract } from '@/context/ContractContext';
@@ -70,9 +69,7 @@ export default function Shop() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-screen-lg p-10 mx-auto">
                     {products.map((item: any, index: number) => (
-                    <ShopCard key={index} title={item?.productName} image={item?.images[0]} price={item?.quantity}>
-                        <AddressBox address={item?.merchantAddress} />
-                    </ShopCard>
+                    <ShopCard key={index} title={item?.productName} image={item?.images[0]} price={item?.quantity} merchantAddress={item?.merchantAddress} />
                     ))}
                 </div>
             )

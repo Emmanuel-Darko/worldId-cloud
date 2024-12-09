@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { shortenAddress } from "@/utils/helpers";
 
@@ -8,11 +8,10 @@ interface AddressBoxProps {
 
 export default function AddressBox({ address }: AddressBoxProps) {
   return (
-    <div className="flex items-center space-x-3 p-3 bg-white rounded-xl shadow-sm border border-gray-200">
-      <div className="text-sm text-gray-700 font-medium">
-        <span>Seller:</span>
-        <address className="text-xs text-blue-600 font-mono">{shortenAddress(address)}</address>
-      </div>
+    <div className="flex items-center justify-between p-2 bg-white bg-opacity-70 rounded-lg shadow-md">
+      <span className="text-xs text-gray-500">
+        Seller: <span className="font-mono text-blue-600">{shortenAddress(address)}</span>
+      </span>
     </div>
   );
 }
